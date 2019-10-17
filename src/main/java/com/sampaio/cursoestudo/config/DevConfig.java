@@ -19,7 +19,6 @@ public class DevConfig {
 
     @Bean
     public boolean instantienteDataBase(){
-
         if(!"create".equals(strategy)){
             return false;
         }
