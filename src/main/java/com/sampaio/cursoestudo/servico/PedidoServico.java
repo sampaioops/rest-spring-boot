@@ -31,6 +31,9 @@ public class PedidoServico implements Serializable {
     @Autowired
     private PedidoItemRepositorio pedidoItemRepositorio;
 
+    @Autowired
+    private ClienteServico clienteServico;
+
     public Pedido buscar(Long id){
         Optional<Pedido> pedido = pedidoRepositorio.findById(id);
 
@@ -44,6 +47,7 @@ public class PedidoServico implements Serializable {
         pedido.setDataHora(new Date());
         pedido.getPagamento().setPagamentoStatus(PagamentoStatus.PENDENTE);
         pedido.getPagamento().setPedido(pedido);
+        pedido.setCliente(clienteServico.buscar(pedido.getCliente().getId()));
 
         if(pedido.getPagamento() instanceof PagamentoBoleto){
             PagamentoBoleto pagamentoBoleto = (PagamentoBoleto) pedido.getPagamento();
@@ -56,11 +60,14 @@ public class PedidoServico implements Serializable {
 
         for(PedidoItem item : pedido.getItems()){
             item.setDesconto(0d);
-            item.setPreco(produtoServico.buscar(item.getProduto().getId()).getPreco());
+            item.setProduto(produtoServico.buscar(item.getProduto().getId()));
+            item.setPreco(item.getProduto().getPreco());
             item.setPedido(pedido);
         }
 
         pedidoItemRepositorio.saveAll(pedido.getItems());
+
+        System.out.println(pedido.toString());
 
         return pedido;
     }

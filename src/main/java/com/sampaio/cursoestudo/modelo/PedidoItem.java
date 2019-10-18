@@ -94,4 +94,18 @@ public class PedidoItem implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer();
+        sb.append(getProduto().getNome());
+        sb.append(", Qte: ");
+        sb.append(getQuantidade());
+        sb.append(", Preço Unitário: ");
+        sb.append(getPreco());
+        sb.append(", SubTotal: ");
+        sb.append(getSubTotal());
+        sb.append("\n");
+        return sb.toString();
+    }
 }

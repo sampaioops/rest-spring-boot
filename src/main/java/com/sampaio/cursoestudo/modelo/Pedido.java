@@ -113,12 +113,24 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataHora=" + dataHora +
-                ", pagamento=" + pagamento +
-                ", cliente=" + cliente +
-                ", enderecoEntraga=" + enderecoEntraga +
-                '}';
+        final StringBuffer sb = new StringBuffer();
+        sb.append("Pedido número: ");
+        sb.append(getId());
+        sb.append(", DataHora: ");
+        sb.append(getDataHora());
+        sb.append(", Cliente: ");
+        sb.append(getCliente().getNome());
+        sb.append(", Situação do Pagamento: ");
+        sb.append(getPagamento().getPagamentoStatus().getDescricao());
+        sb.append("\nDetalhes:\n");
+
+        for (PedidoItem item : getItems()){
+            sb.append(item.toString());
+        }
+
+        sb.append("Valor Total: ");
+        sb.append(getValorTotal());
+
+        return sb.toString();
     }
 }
