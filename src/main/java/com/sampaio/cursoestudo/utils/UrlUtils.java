@@ -14,10 +14,12 @@ public class UrlUtils {
         String [] vet = ids.split(",");
         List<Long> list = new ArrayList<>();
 
-        for(int i = 0; i<vet.length; i++ ){
-            list.add(Long.valueOf(vet[i]));
-        }
+        if(ids.length() != 0){
+            for(int i = 0; i<vet.length; i++ ){
+                list.add(Long.valueOf(vet[i]));
+            }
 
+        }
 
         return list;
     }
