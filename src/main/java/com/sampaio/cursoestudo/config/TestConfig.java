@@ -1,6 +1,8 @@
 package com.sampaio.cursoestudo.config;
 
 import com.sampaio.cursoestudo.servico.DbService;
+import com.sampaio.cursoestudo.servico.EmailServico;
+import com.sampaio.cursoestudo.servico.MockEmailServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +17,13 @@ public class TestConfig {
 
     @Bean
     public boolean instantienteDataBase(){
-
         dbService.instantianteTestDatabase();
-
         return true;
+    }
+
+    @Bean
+    public EmailServico emailServico(){
+        return new MockEmailServico();
     }
 
 

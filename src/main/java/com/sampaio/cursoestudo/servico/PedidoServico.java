@@ -34,6 +34,9 @@ public class PedidoServico implements Serializable {
     @Autowired
     private ClienteServico clienteServico;
 
+    @Autowired
+    private EmailServico emailServico;
+
     public Pedido buscar(Long id){
         Optional<Pedido> pedido = pedidoRepositorio.findById(id);
 
@@ -67,7 +70,7 @@ public class PedidoServico implements Serializable {
 
         pedidoItemRepositorio.saveAll(pedido.getItems());
 
-        System.out.println(pedido.toString());
+        emailServico.envioaOrdemConfirmacaoEmail(pedido);
 
         return pedido;
     }
