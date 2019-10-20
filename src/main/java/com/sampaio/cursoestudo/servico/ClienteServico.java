@@ -1,6 +1,8 @@
 package com.sampaio.cursoestudo.servico;
 
+import com.sampaio.cursoestudo.enums.Perfil;
 import com.sampaio.cursoestudo.enums.TipoCliente;
+import com.sampaio.cursoestudo.exception.AuthorizationException;
 import com.sampaio.cursoestudo.exception.DataIntegrityException;
 import com.sampaio.cursoestudo.exception.ObjectNotFoundExcpetion;
 import com.sampaio.cursoestudo.modelo.Categoria;
@@ -11,6 +13,7 @@ import com.sampaio.cursoestudo.modelo.dto.ClienteCompletoDTO;
 import com.sampaio.cursoestudo.modelo.dto.ClienteDTO;
 import com.sampaio.cursoestudo.repositorio.ClienteRepositorio;
 import com.sampaio.cursoestudo.repositorio.EnderecoRepositorio;
+import com.sampaio.cursoestudo.seguranca.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -36,6 +39,12 @@ public class ClienteServico implements Serializable {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Cliente buscar(Long id) {
+        UserSS userSS = UsuarioServico.authenticated();
+
+        if(userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId())){
+            throw new AuthorizationException("Acesso negado!");
+        }
+
         Optional<Cliente> cliente = clienteRepositorio.findById(id);
 
         return cliente.orElseThrow(() -> new ObjectNotFoundExcpetion(

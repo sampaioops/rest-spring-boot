@@ -1,5 +1,6 @@
 package com.sampaio.cursoestudo.resources.Exceptions;
 
+import com.sampaio.cursoestudo.exception.AuthorizationException;
 import com.sampaio.cursoestudo.exception.DataIntegrityException;
 import com.sampaio.cursoestudo.exception.ObjectNotFoundExcpetion;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,14 @@ public class ResourceExceptionHandler {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroPadrao);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<ErroPadrao> authorizationException(AuthorizationException e, HttpServletRequest request){
+
+        ErroPadrao erroPadrao = new ErroPadrao(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erroPadrao);
     }
 
 }
