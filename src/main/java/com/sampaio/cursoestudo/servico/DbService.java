@@ -1,6 +1,7 @@
 package com.sampaio.cursoestudo.servico;
 
 import com.sampaio.cursoestudo.enums.PagamentoStatus;
+import com.sampaio.cursoestudo.enums.Perfil;
 import com.sampaio.cursoestudo.enums.TipoCliente;
 import com.sampaio.cursoestudo.modelo.*;
 import com.sampaio.cursoestudo.repositorio.*;
@@ -86,16 +87,21 @@ public class DbService {
         estadoRepositorio.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepositorio.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
-        Cliente cliente = new Cliente("Daniel", "sampaioops@outlook.com", "17449665751", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("teste123"));
+        Cliente cliente = new Cliente("Debora", "debora@outlook.com", "38826602875", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("teste123"));
         cliente.getTelefones().addAll(Arrays.asList("22997514050", "22981016444"));
+
+        Cliente cliente2 = new Cliente("Daniel", "sampaioops@outlook.com", "17449665751", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("teste123"));
+        cliente2.getTelefones().addAll(Arrays.asList("22997514050", "22981016444"));
+        cliente2.addPerfil(Perfil.ADMIN);
 
         Endereco endereco1 = new Endereco("Rua Veneza", "100", "casa 3", "Jardim Excelsior", "28915040", cliente, cidade1);
         Endereco endereco2 = new Endereco("Rua Deb", "23", "Ao lado", "Mulher Linda", "28945141", cliente, cidade3);
 
         cliente.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+        cliente2.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
 
 
-        clienteRepositorio.save(cliente);
+        clienteRepositorio.saveAll(Arrays.asList(cliente, cliente2));
         enderecoRepositorio.saveAll(Arrays.asList(endereco1, endereco2));
 
 

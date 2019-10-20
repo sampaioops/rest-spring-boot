@@ -3,11 +3,13 @@ package com.sampaio.cursoestudo.modelo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sampaio.cursoestudo.enums.Perfil;
 import com.sampaio.cursoestudo.enums.TipoCliente;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cliente implements Serializable {
@@ -33,8 +35,12 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "PERFIS")
+    private Set<String> perfils = new HashSet<>();
 
     public Cliente() {
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Cliente(String nome, String email, String cpfCnpj, TipoCliente tipoCliente, String senha) {
@@ -43,6 +49,7 @@ public class Cliente implements Serializable {
         this.cpfCnpj = cpfCnpj;
         this.tipoCliente = tipoCliente;
         this.senha = senha;
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Cliente(Long id, String nome, String email) {
@@ -50,6 +57,8 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.email = email;
     }
+
+
 
     public Long getId() {
         return id;
@@ -121,6 +130,14 @@ public class Cliente implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public Set<Perfil> getPerfils(){
+        return perfils.stream().map(perfil -> Perfil.toEnum(perfil)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil){
+        this.perfils.add(perfil.name());
     }
 
     @Override
