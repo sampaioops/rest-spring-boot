@@ -20,6 +20,8 @@ public class Cliente implements Serializable {
     private String nome;
     private String email;
     private String cpfCnpj;
+    @JsonIgnore
+    private String senha;
     @Enumerated(EnumType.STRING)
     private TipoCliente tipoCliente;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -35,11 +37,12 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String nome, String email, String cpfCnpj, TipoCliente tipoCliente) {
+    public Cliente(String nome, String email, String cpfCnpj, TipoCliente tipoCliente, String senha) {
         this.nome = nome;
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.tipoCliente = tipoCliente;
+        this.senha = senha;
     }
 
     public Cliente(Long id, String nome, String email) {
@@ -78,6 +81,14 @@ public class Cliente implements Serializable {
 
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public TipoCliente getTipoCliente() {

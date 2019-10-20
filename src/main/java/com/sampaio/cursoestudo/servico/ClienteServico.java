@@ -16,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -30,6 +31,9 @@ public class ClienteServico implements Serializable {
 
     @Autowired
     private EnderecoRepositorio enderecoRepositorio;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Cliente buscar(Long id) {
         Optional<Cliente> cliente = clienteRepositorio.findById(id);
@@ -78,7 +82,7 @@ public class ClienteServico implements Serializable {
     }
 
     public Cliente retornaCliente(ClienteCompletoDTO clienteCompletoDTO) {
-        Cliente cliente = new Cliente(clienteCompletoDTO.getNome(), clienteCompletoDTO.getEmail(), clienteCompletoDTO.getCpfCnpj(), TipoCliente.valueOf(clienteCompletoDTO.getTipoCliente().toUpperCase().trim()));
+        Cliente cliente = new Cliente(clienteCompletoDTO.getNome(), clienteCompletoDTO.getEmail(), clienteCompletoDTO.getCpfCnpj(), TipoCliente.valueOf(clienteCompletoDTO.getTipoCliente().toUpperCase().trim()), bCryptPasswordEncoder.encode(clienteCompletoDTO.getSenha()));
         Cidade cidade = new Cidade(clienteCompletoDTO.getCidadeId(), null, null);
         Endereco endereco = new Endereco(clienteCompletoDTO.getLogradouro(), clienteCompletoDTO.getNumero(), clienteCompletoDTO.getComplemento(), clienteCompletoDTO.getBairro(), clienteCompletoDTO.getCep(), cliente, cidade);
 

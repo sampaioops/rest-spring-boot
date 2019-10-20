@@ -5,6 +5,7 @@ import com.sampaio.cursoestudo.enums.TipoCliente;
 import com.sampaio.cursoestudo.modelo.*;
 import com.sampaio.cursoestudo.repositorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -39,6 +40,9 @@ public class DbService {
 
     @Autowired
     private PedidoItemRepositorio pedidoItemRepositorio;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void instantianteTestDatabase(){
         Categoria categoria1 = new Categoria( "Informática");
@@ -82,7 +86,7 @@ public class DbService {
         estadoRepositorio.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepositorio.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
-        Cliente cliente = new Cliente("Daniel", "sampaioops@outlook.com", "17449665751", TipoCliente.PESSOAFISICA);
+        Cliente cliente = new Cliente("Daniel", "sampaioops@outlook.com", "17449665751", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("teste123"));
         cliente.getTelefones().addAll(Arrays.asList("22997514050", "22981016444"));
 
         Endereco endereco1 = new Endereco("Rua Veneza", "100", "casa 3", "Jardim Excelsior", "28915040", cliente, cidade1);
