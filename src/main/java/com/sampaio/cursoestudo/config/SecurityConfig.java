@@ -1,6 +1,7 @@
 package com.sampaio.cursoestudo.config;
 
 import com.sampaio.cursoestudo.seguranca.JWTAutenticacaoFilter;
+import com.sampaio.cursoestudo.seguranca.JWTAuthorizationFilter;
 import com.sampaio.cursoestudo.seguranca.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHES).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAutenticacaoFilter(authenticationManager(), jwtUtils));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtils, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

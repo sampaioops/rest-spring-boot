@@ -1,4 +1,4 @@
-package com.sampaio.cursoestudo.servico;
+package com.sampaio.cursoestudo.seguranca;
 
 import com.sampaio.cursoestudo.modelo.Cliente;
 import com.sampaio.cursoestudo.repositorio.ClienteRepositorio;
