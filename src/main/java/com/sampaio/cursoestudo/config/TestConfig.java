@@ -1,8 +1,8 @@
 package com.sampaio.cursoestudo.config;
 
 import com.sampaio.cursoestudo.servico.DbService;
-import com.sampaio.cursoestudo.servico.EmailServico;
-import com.sampaio.cursoestudo.servico.MockEmailServico;
+import com.sampaio.cursoestudo.servico.email.EmailServico;
+import com.sampaio.cursoestudo.servico.email.MockEmailServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

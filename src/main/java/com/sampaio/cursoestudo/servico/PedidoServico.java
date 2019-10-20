@@ -8,6 +8,7 @@ import com.sampaio.cursoestudo.modelo.PedidoItem;
 import com.sampaio.cursoestudo.repositorio.PagamentoRepositorio;
 import com.sampaio.cursoestudo.repositorio.PedidoItemRepositorio;
 import com.sampaio.cursoestudo.repositorio.PedidoRepositorio;
+import com.sampaio.cursoestudo.servico.email.EmailServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
