@@ -77,7 +77,7 @@ public class PedidoServico implements Serializable {
 
         pedidoItemRepositorio.saveAll(pedido.getItems());
 
-        //emailServico.envioaOrdemConfirmacaoEmail(pedido);
+        emailServico.envioaOrdemConfirmacaoEmail(pedido);
 
         return pedido;
     }
