@@ -1,5 +1,6 @@
 package com.sampaio.cursoestudo.servico.email;
 
+import com.sampaio.cursoestudo.modelo.Cliente;
 import com.sampaio.cursoestudo.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,4 +76,24 @@ public abstract class AbstratoEmailServico implements EmailServico {
     }
 
 
+    @Override
+    public void enviaNovaSenhaEmail(Cliente cliente, String newPass) {
+        SimpleMailMessage msg = preparaNovaSenhaEmail(cliente, newPass);
+        sendEmail(msg);
+    }
+
+    protected SimpleMailMessage preparaNovaSenhaEmail(Cliente cliente, String newPass) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+
+        //Destinatario
+        msg.setTo(cliente.getEmail());
+        //Remetente
+        msg.setFrom(emailPadrao);
+        msg.setSubject("Solitação de nova senha");
+        msg.setSentDate(new Date(System.currentTimeMillis()));
+        msg.setText("Nova senha: " + newPass);
+
+        return msg;
+
+    }
 }

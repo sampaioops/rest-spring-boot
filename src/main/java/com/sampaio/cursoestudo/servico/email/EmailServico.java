@@ -1,5 +1,6 @@
 package com.sampaio.cursoestudo.servico.email;
 
+import com.sampaio.cursoestudo.modelo.Cliente;
 import com.sampaio.cursoestudo.modelo.Pedido;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.MimeMailMessage;
@@ -17,4 +18,6 @@ public interface EmailServico {
     void envioaOrdemConfirmacaoEmailHtml(Pedido pedido);
 
     void sendEmailHtml(MimeMessage mimeMessage);
+
+    void enviaNovaSenhaEmail(Cliente cliente, String newPass);
 }
